@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('name').value = result.savedName;
   }
   if (result.storedScreenshot) {
+    console.log('Loading stored screenshot');
     showStoredScreenshot(result.storedScreenshot);
   }
   updatePreview();
@@ -91,19 +92,26 @@ document.getElementById('clearScreenshot').addEventListener('click', async () =>
 // Listen for screenshot completion
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'screenshotCompleted' && request.dataUrl) {
+    console.log('Received screenshot in popup');
     // Store the screenshot
     chrome.storage.local.set({ storedScreenshot: request.dataUrl });
     showStoredScreenshot(request.dataUrl);
-    showStatus('✅ Screenshot captured and stored!', 'success');
+    showStatus('✅ Screenshot ready to copy!', 'success');
   }
 });
 
 function showStoredScreenshot(dataUrl) {
+  console.log('Showing stored screenshot');
   const preview = document.getElementById('screenshotPreview');
   const image = document.getElementById('screenshotImage');
   
-  image.src = dataUrl;
-  preview.style.display = 'block';
+  if (preview && image) {
+    image.src = dataUrl;
+    preview.style.display = 'block';
+    console.log('Screenshot preview displayed');
+  } else {
+    console.error('Preview elements not found');
+  }
 }
 
 function generateMessage() {
