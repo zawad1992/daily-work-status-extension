@@ -24,34 +24,48 @@ Note: [Your optional note here]
 
 ## 🛠️ Installation Instructions
 
-### Step 1: Download Files
+### Method 1: Git Clone (Recommended)
 
-Create a new folder on your computer called `daily-work-status-extension` and save these files inside it:
+1. **Clone or pull the extension from GitHub**
+```bash
+# Clone the repository
+git clone https://github.com/zawad1992/daily-work-status-extension.git
 
-#### Required Files:
-1. **manifest.json**
-2. **popup.html** 
-3. **popup.js**
-4. **content.js**
-5. **content.css**
-6. **background.js**
+# Navigate to the folder
+cd daily-work-status-extension
+```
 
-### Step 2: Install in Chrome
+2. **Install in Chrome**
+   - Open Chrome and go to `chrome://extensions/`
+   - Enable **"Developer mode"** (toggle in top-right corner)
+   - Click **"Load unpacked"**
+   - Select the cloned `daily-work-status-extension` folder
+   - The extension icon should now appear in your Chrome toolbar
+   - Pin your extension (Optional)
 
-1. **Open Chrome** and go to `chrome://extensions/`
-2. **Enable Developer mode** (toggle in top-right corner)
-3. **Click "Load unpacked"**
-4. **Select your extension folder** (`daily-work-status-extension`)
-5. **The extension icon** should now appear in your Chrome toolbar
+### Method 2: Download ZIP
 
-### Step 3: Optional - Add Icons
+1. **Download the extension**
+   - Go to [https://github.com/zawad1992/daily-work-status-extension](https://github.com/zawad1992/daily-work-status-extension)
+   - Click the green **"Code"** button
+   - Select **"Download ZIP"**
+   - Extract the ZIP file to a folder on your computer
 
-For a better visual experience, you can add custom icons:
-- Create or download 16x16, 48x48, and 128x128 pixel PNG files
-- Name them: `icon16.png`, `icon48.png`, `icon128.png`
-- Place them in the same folder as your other files
+2. Then **follow the same Chrome installation steps of Method 1** above.
 
-**Alternative:** Remove the icons section from `manifest.json` if you don't want to add icons.
+### Method 3: Direct Download Files
+
+If you prefer to download individual files:
+
+1. **Visit the GitHub repository**: [https://github.com/zawad1992/daily-work-status-extension](https://github.com/zawad1992/daily-work-status-extension)
+2. **Download each file** and save to a new folder:
+   - `manifest.json`
+   - `popup.html`
+   - `popup.js`
+   - `content.js`
+   - `content.css`
+   - `background.js`
+3. **Follow the Chrome installation steps of Method 1** above
 
 ## 🎯 How to Use
 
@@ -148,7 +162,7 @@ Edit the CSS in `popup.html` or `content.css`
 - **No tracking** - your information stays private
 - **Local storage only** - data clears when browser closes
 
-## 📂 File Structure
+## 📂 Repository Structure
 
 ```
 daily-work-status-extension/
@@ -158,10 +172,37 @@ daily-work-status-extension/
 ├── content.js            # Page interaction & screenshots
 ├── content.css           # Screenshot overlay styles
 ├── background.js         # Background script (service worker)
-├── icon16.png           # 16x16 icon (optional)
-├── icon48.png           # 48x48 icon (optional)
-└── icon128.png          # 128x128 icon (optional)
+└── README.md             # This file
 ```
+
+## 🚀 Quick Start
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/zawad1992/daily-work-status-extension.git
+
+# 2. Open Chrome and go to chrome://extensions/
+
+# 3. Enable Developer mode
+
+# 4. Click "Load unpacked" and select the cloned folder
+
+# 5. Start using the extension!
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
 
 ## ❓ FAQ
 
@@ -188,6 +229,11 @@ If you encounter issues:
 2. **Reload the extension** - Go to chrome://extensions/ and reload  
 3. **Restart Chrome** - Sometimes helps with permission issues
 4. **Check file structure** - Ensure all files are in the correct folder
+5. **Open an issue** - [Create an issue on GitHub](https://github.com/zawad1992/daily-work-status-extension/issues)
+
+## 🌟 Star the Repository
+
+If you find this extension helpful, please give it a ⭐ on GitHub!
 
 ## 🎉 Enjoy!
 
