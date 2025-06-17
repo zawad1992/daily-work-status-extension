@@ -3,20 +3,34 @@
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
+  width: 100vw !important;
+  height: 100vh !important;
   background: rgba(0, 0, 0, 0.4) !important;
   z-index: 2147483647 !important;
   cursor: crosshair !important;
   user-select: none !important;
+  pointer-events: auto !important;
 }
 
 .selection-box {
-  position: absolute !important;
-  border: 2px dashed #00ff00 !important;
-  background: rgba(0, 255, 0, 0.1) !important;
+  position: fixed !important;
+  border: 3px solid #00ff00 !important;
+  background: rgba(0, 255, 0, 0.15) !important;
   display: none !important;
   pointer-events: none !important;
+  z-index: 2147483648 !important;
+  box-sizing: border-box !important;
+}
+
+.selection-box::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -3px !important;
+  left: -3px !important;
+  right: -3px !important;
+  bottom: -3px !important;
+  border: 2px dashed #ffffff !important;
+  z-index: 1 !important;
 }
 
 .screenshot-instructions {
@@ -24,16 +38,30 @@
   top: 20px !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
-  background: rgba(0, 0, 0, 0.8) !important;
-  color: white !important;
-  padding: 12px 20px !important;
-  border-radius: 8px !important;
+  background: rgba(0, 0, 0, 0.9) !important;
+  color: #00ff00 !important;
+  padding: 15px 25px !important;
+  border-radius: 10px !important;
   font-family: Arial, sans-serif !important;
-  font-size: 14px !important;
+  font-size: 16px !important;
   font-weight: bold !important;
-  z-index: 2147483648 !important;
+  z-index: 2147483649 !important;
   pointer-events: none !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+  border: 2px solid #00ff00 !important;
+  animation: pulse 2s infinite !important;
+}
+
+@keyframes pulse {
+  0% { 
+    box-shadow: 0 4px 20px rgba(0, 255, 0, 0.3);
+  }
+  50% { 
+    box-shadow: 0 4px 20px rgba(0, 255, 0, 0.6);
+  }
+  100% { 
+    box-shadow: 0 4px 20px rgba(0, 255, 0, 0.3);
+  }
 }
 
 .screenshot-notification {
@@ -45,7 +73,7 @@
   font-family: Arial, sans-serif !important;
   font-size: 14px !important;
   font-weight: bold !important;
-  z-index: 2147483648 !important;
+  z-index: 2147483650 !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
   animation: slideIn 0.3s ease-out !important;
 }
