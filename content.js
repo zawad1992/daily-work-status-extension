@@ -135,17 +135,32 @@ function initScreenshotMode() {
     
     isSelecting = false;
     
-    console.log('Selection completed:', {left, top, width, height});
+    // Show the coordinates for debugging
+    console.log('Selection completed:', {
+      left, top, width, height,
+      devicePixelRatio: window.devicePixelRatio,
+      windowSize: { width: window.innerWidth, height: window.innerHeight },
+      documentSize: { width: document.documentElement.scrollWidth, height: document.documentElement.scrollHeight },
+      scrollPosition: { x: window.scrollX, y: window.scrollY }
+    });
     
-    // Clean up immediately
+    // IMMEDIATELY remove all overlay elements to prevent them from appearing in screenshot
     overlay.remove();
     selectionBox.remove();
     instructions.remove();
     
     // Only proceed if selection is meaningful
     if (width > 10 && height > 10) {
-      const rect = { x: left, y: top, width: width, height: height };
-      takeScreenshotAndStore(rect);
+      // Wait a brief moment for the DOM to update after removing overlays
+      setTimeout(() => {
+        const rect = { 
+          x: left, 
+          y: top, 
+          width: width, 
+          height: height 
+        };
+        takeScreenshotAndStore(rect);
+      }, 100); // 100ms delay to ensure overlays are gone
     } else {
       showNotification('❌ Selection too small, please try again', 'error');
     }
@@ -170,6 +185,12 @@ function initScreenshotMode() {
 async function takeScreenshotAndStore(rect) {
   try {
     console.log('Taking screenshot with rect:', rect);
+    
+    // Clean up any remaining extension elements
+    cleanupExtensionElements();
+    
+    // Wait a bit more for the page to settle
+    await new Promise(resolve => setTimeout(resolve, 200));
     
     // Request screenshot from background script
     const response = await new Promise((resolve) => {
@@ -208,6 +229,40 @@ async function takeScreenshotAndStore(rect) {
   }
 }
 
+// Function to clean up any extension elements that might interfere
+function cleanupExtensionElements() {
+  // Remove any elements that might have our extension IDs
+  const elementsToRemove = [
+    'screenshot-overlay',
+    'selection-box', 
+    'screenshot-notification'
+  ];
+  
+  elementsToRemove.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.remove();
+      console.log('Cleaned up element:', id);
+    }
+  });
+  
+  // Remove any elements with our class names
+  const classesToRemove = [
+    'screenshot-overlay',
+    'selection-box',
+    'screenshot-instructions',
+    'screenshot-notification'
+  ];
+  
+  classesToRemove.forEach(className => {
+    const elements = document.getElementsByClassName(className);
+    while (elements.length > 0) {
+      elements[0].remove();
+      console.log('Cleaned up class:', className);
+    }
+  });
+}
+
 // Function to crop image in the page context
 async function cropImageInPage(dataUrl, rect) {
   return new Promise((resolve, reject) => {
@@ -218,21 +273,38 @@ async function cropImageInPage(dataUrl, rect) {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         
-        // Set canvas size to the crop area
+        // Get the device pixel ratio for accurate cropping
+        const devicePixelRatio = window.devicePixelRatio || 1;
+        
+        // Calculate actual coordinates considering device pixel ratio
+        const actualX = rect.x * devicePixelRatio;
+        const actualY = rect.y * devicePixelRatio;
+        const actualWidth = rect.width * devicePixelRatio;
+        const actualHeight = rect.height * devicePixelRatio;
+        
+        // Set canvas size to the crop area (in display pixels)
         canvas.width = rect.width;
         canvas.height = rect.height;
+        
+        console.log('Cropping with:', {
+          sourceRect: { x: actualX, y: actualY, width: actualWidth, height: actualHeight },
+          targetSize: { width: rect.width, height: rect.height },
+          devicePixelRatio: devicePixelRatio,
+          imageSize: { width: img.width, height: img.height }
+        });
         
         // Draw the cropped portion
         ctx.drawImage(
           img,
-          rect.x, rect.y, rect.width, rect.height,  // Source rectangle
-          0, 0, rect.width, rect.height             // Destination rectangle
+          actualX, actualY, actualWidth, actualHeight,  // Source rectangle (in actual pixels)
+          0, 0, rect.width, rect.height                  // Destination rectangle (display pixels)
         );
         
         // Convert to data URL
-        const croppedDataUrl = canvas.toDataURL('image/png');
+        const croppedDataUrl = canvas.toDataURL('image/png', 1.0);
         resolve(croppedDataUrl);
       } catch (error) {
+        console.error('Crop error:', error);
         reject(error);
       }
     };
