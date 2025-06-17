@@ -19,4 +19,24 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // Return true to indicate we'll send a response asynchronously
     return true;
   }
+  
+  // Forward screenshot completion to all extension contexts
+  if (request.action === 'screenshotCompleted') {
+    // Store in chrome.storage so popup can access it
+    chrome.storage.local.set({ 
+      storedScreenshot: request.dataUrl,
+      screenshotTimestamp: Date.now()
+    });
+    
+    // Try to send to popup if it's open
+    chrome.runtime.sendMessage({
+      action: 'screenshotCompleted',
+      dataUrl: request.dataUrl
+    }).catch(() => {
+      // Popup might not be open, that's fine
+      console.log('Popup not open, screenshot stored for later');
+    });
+    
+    sendResponse({ success: true });
+  }
 });
