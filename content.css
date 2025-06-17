@@ -1,0 +1,72 @@
+/* Screenshot overlay styles */
+.screenshot-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+  z-index: 2147483647 !important;
+  cursor: crosshair !important;
+  user-select: none !important;
+}
+
+.selection-box {
+  position: absolute !important;
+  border: 2px dashed #00ff00 !important;
+  background: rgba(0, 255, 0, 0.1) !important;
+  display: none !important;
+  pointer-events: none !important;
+}
+
+.screenshot-instructions {
+  position: fixed !important;
+  top: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: white !important;
+  padding: 12px 20px !important;
+  border-radius: 8px !important;
+  font-family: Arial, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+  z-index: 2147483648 !important;
+  pointer-events: none !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.screenshot-notification {
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  padding: 12px 20px !important;
+  border-radius: 8px !important;
+  font-family: Arial, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+  z-index: 2147483648 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  animation: slideIn 0.3s ease-out !important;
+}
+
+.screenshot-notification.success {
+  background: #4CAF50 !important;
+  color: white !important;
+}
+
+.screenshot-notification.error {
+  background: #f44336 !important;
+  color: white !important;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
