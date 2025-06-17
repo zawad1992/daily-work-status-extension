@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Daily Work Status Generator",
+  "version": "1.0",
+  "description": "Generate daily work status messages and take screenshots",
+  "permissions": [
+    "activeTab",
+    "clipboardWrite",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Daily Work Status"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icon16.png", 
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
