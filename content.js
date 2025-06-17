@@ -187,14 +187,18 @@ async function takeScreenshotAndStore(rect) {
         finalDataUrl = await cropImageInPage(response.dataUrl, response.rect);
       }
       
-      // Send the screenshot back to extension for storage
+      console.log('Screenshot processed, sending to background');
+      
+      // Send the screenshot to background script for storage
       chrome.runtime.sendMessage({
         action: 'screenshotCompleted',
         dataUrl: finalDataUrl
+      }, (response) => {
+        console.log('Screenshot stored in background:', response);
       });
       
       // Show success message
-      showNotification('✅ Screenshot captured and stored!', 'success');
+      showNotification('✅ Screenshot captured! Open extension to copy.', 'success');
     } else {
       throw new Error(response?.error || 'Failed to capture screenshot');
     }
