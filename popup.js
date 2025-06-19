@@ -122,7 +122,7 @@ function generateMessage() {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric'
-  });
+  }).replace(/\//g, '-');
   
   let message = `${name}'s Work Status:\nDate: ${dateStr}\nSigning out`;
   
