@@ -124,7 +124,7 @@ function generateMessage() {
     year: 'numeric'
   }).replace(/\//g, '-');
   
-  let message = `${name}'s Work Status:\nDate: ${dateStr}\nSigning out`;
+  let message = `${name}'s Work Status:\nDate: ${dateStr}\n\nSigning out`;
   
   if (note) {
     message += `\nNote: ${note}`;
